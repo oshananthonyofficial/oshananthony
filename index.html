@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oshan Anthony | Official Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #333; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #060606;
+            color: #f5f5f7;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .bg-glow-1 {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 70%);
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .bg-glow-2 {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0) 70%);
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .wrapper { max-width: 680px; width: 100%; z-index: 1; display: flex; flex-direction: column; gap: 48px; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.03) 30%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0.03) 70%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-25deg);
+            pointer-events: none;
+        }
+        .glass-card:hover::before { left: 150%; transition: all 0.8s ease-in-out; }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        h2 { font-size: 16px; text-transform: uppercase; letter-spacing: 2px; color: #8e8e93; margin-bottom: 20px; font-weight: 600; }
+        .profile-header { text-align: center; padding: 40px 20px; }
+        .profile-img-container { position: relative; width: 140px; height: 140px; margin: 0 auto 24px; }
+        .profile-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.15); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+        h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 6px; color: #ffffff; }
+        .subtitle { font-size: 15px; color: #a1a1a6; font-weight: 400; letter-spacing: 0.5px; }
+        .bio-text { font-size: 15px; line-height: 1.7; color: #d1d1d6; text-align: justify; }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .gallery-item { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/5; background: #111; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .gallery-item:hover img { transform: scale(1.06); }
+
+        .project-list { display: flex; flex-direction: column; gap: 16px; }
+        .project-row { display: flex; align-items: center; gap: 20px; }
+        .project-img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; background: #111; border: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
+        .project-info { flex-grow: 1; }
+        .project-title { font-size: 16px; font-weight: 600; color: #ffffff; margin-bottom: 2px; }
+        .project-meta { font-size: 13px; color: #8e8e93; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .stat-box { display: flex; flex-direction: column; gap: 4px; }
+        .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8e8e93; }
+        .stat-value { font-size: 14px; font-weight: 500; color: #ffffff; }
+
+        .links-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        @media(max-width: 480px) {
+            .links-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+        .link-button { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #e5e5ea; font-size: 14px; font-weight: 500; }
+        .link-button svg { width: 20px; height: 20px; fill: currentColor; color: #a1a1a6; transition: color 0.3s; }
+        .link-button:hover svg { color: #ffffff; }
+        footer { text-align: center; font-size: 11px; color: #48484a; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 24px; padding-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <div class="wrapper">
+
+        <!-- HEADER SECTION -->
+        <header class="profile-header">
+            <div class="profile-img-container">
+                <img src="profile.png" alt="Oshan Anthony" class="profile-img">
+            </div>
+            <h1>Oshan Anthony</h1>
+            <div class="subtitle">Musical Artist & Creator</div>
+        </header>
+
+        <!-- MAIN BIOGRAPHY -->
+        <section class="glass-card">
+            <p class="bio-text">
+                Oshan Anthony is a Sri Lankan actor and a Musical artist. He began his acting career at a young age, appearing in short films released on YouTube and featured on IMDb. He is known for his role in Tiara: She Came (2025). With a growing interest in film and performance, Oshan continues to build his experience through independent and short-form projects and also with his new song projects.
+            </p>
+        </section>
+
+        <!-- PERSONAL IMAGES GALLERY -->
+        <section>
+            <h2>Personal Photos</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="photo1.png" alt="Oshan Anthony Portrait"></div>
+                <div class="gallery-item"><img src="photo2.png" alt="Oshan Anthony on Medium Blog"></div>
+                   </div>
+        </section>
+
+        <!-- FILMOGRAPHY PROJECTS -->
+        <section>
+            <h2>Film Projects</h2>
+            <div class="project-list">
+                <div class="glass-card project-row">
+                    <img src="film_tiara.jpeg" alt="Tiara: She Came" class="project-img">
+                    <div class="project-info">
+                        <div class="project-title">Tiara : She Came</div>
+                        <div class="project-meta">Feature / Short Film (2025)</div>
+                    </div>
+                </div>
+                <div class="glass-card project-row">
+                    <img src="film_halloween.jpeg" alt="The Dark of the Halloween" class="project-img">
+                    <div class="project-info">
+                        <div class="project-title">The Dark of the Halloween</div>
+                        <div class="project-meta">Short Film Project</div>
+                    </div>
+                </div>
+                <div class="glass-card project-row">
+                    <img src="film_krampus.png" alt="Krampus" class="project-img">
+                    <div class="project-info">
+                        <div class="project-title">Krampus</div>
+                        <div class="project-meta">Short Project (2024)</div>
+                    </div>
+                </div>
+                <div class="glass-card project-row">
+                    <img src="film_jesus.jpg" alt="Jesus of Nazareth" class="project-img">
+                    <div class="project-info">
+                        <div class="project-title">Jesus of Nazareth</div>
+                        <div class="project-meta">Independent Project (2023)</div>
+                    </div>
+                </div>
+                <div class="glass-card project-row">
+                    <img src="film_mathithuma.jpg" alt="Mathithuma" class="project-img">
+                    <div class="project-info">
+                        <div class="project-title">Mathithuma</div>
+                        <div class="project-meta">Official Music Video</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SONG PROJECTS -->
+        <section>
+            <h2>Song Projects</h2>
+            <div class="project-list">
+                <div class="glass-card project-row">
+                    <img src="song_joseph.jpg" alt="Juse Munindune" class="project-img">
+                    <div class="project-info">
+                        <div class="project-title">Juse Munindune : Hymn to St. Joseph</div>
+                        <div class="project-meta">Official Release</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADDITIONAL BIO INFORMATION -->
+        <section class="glass-card stats-grid">
+            <div class="stat-box">
+                <div class="stat-label">Born</div>
+                <div class="stat-value">November 17, 2010</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Also Known As</div>
+                <div class="stat-value">Oshan Fernando, Osh</div>
+            </div>
+        </section>
+
+        <!-- PORTALS (Paste links below replacing placeholders) -->
+        <section>
+            <h2>Platforms & Socials</h2>
+            <div class="links-grid">
+                <a href="https://open.spotify.com/artist/0Sm3DJcgan2fK9GV21vZRi?si=KJhiJqkGRZC25goqC_eb7Q" target="_blank" class="glass-card link-button">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.893-.982-.336.075-.668-.135-.744-.47-.075-.336.135-.668.47-.743 3.856-.88 7.15-.51 9.822 1.13.296.178.387.563.206.86zM17.81 13.7c-.226.367-.706.487-1.072.26-2.72-1.672-6.87-2.157-10.08-1.182-.413.125-.847-.107-.972-.52-.125-.413.108-.847.52-.972 3.672-1.114 8.243-.574 11.343 1.334.366.226.486.706.26 1.072zm.105-2.835C14.392 8.71 8.423 8.51 4.984 9.554c-.53.16-1.09-.142-1.25-.672-.16-.53.142-1.09.672-1.25 3.963-1.202 10.556-.975 14.6 1.427.477.283.633.9.35 1.376-.283.477-.9.633-1.376.356z"/></svg>
+                    <span>Spotify</span>
+                </a>
+                <a href="https://music.apple.com/lk/artist/oshan-anthony/1894454605" target="_blank" class="glass-card link-button">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.188 11.564c-.05.517-.367.952-.952.952-.383 0-.683-.183-1.016-.483l-1.617-1.467c-.217-.2-.483-.317-.767-.317H10.5v3.45c0 .65-.333.983-.983.983-.633 0-.967-.333-.967-.983V8.85c0-.65.333-.983.967-.983h1.867c1.333 0 2.217.75 2.217 1.95 0 .933-.517 1.633-1.35 1.867l1.717 1.567c.616.55.767.85.733 1.313zM10.5 9.383v1.85h1.233c.583 0 .933-.3.933-.917s-.35-.933-.933-.933H10.5z"/></svg>
+                    <span>Apple Music</span>
+                </a>
+                <a href="https://music.amazon.com/artists/B0GXWN7XPP/oshan-anthony?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_b70P86xLIWpb4C6GIEUpxgfgm" target="_blank" class="glass-card link-button">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.12 12.56c-.34.34-.84.44-1.24.19-.74-.46-1.52-.71-2.4-.71-1.44 0-2.6 1.1-2.6 2.45s1.16 2.45 2.6 2.45c.82 0 1.56-.22 2.23-.62.43-.26.96-.13 1.25.26.26.36.16.88-.23 1.14-.94.62-2.03.97-3.25.97-3.23 0-5.85-2.52-5.85-5.65S9.25 9.4 12.48 9.4c1.3 0 2.47.37 3.46 1.03.4.26.5.78.24 1.18-.26.4-.76.53-1.16.27-.74-.5-1.63-.78-2.54-.78-1.9 0-3.45 1.48-3.45 3.3s1.55 3.3 3.45 3.3c.6 0 1.13-.15 1.6-.42v-2.32h-1.6c-.5 0-.9-.4-.9-.9s.4-.9.9-.9h2.5c.5 0 .9.4.9.9v3.7c0 .04-.02.08-.02.12z"/></svg>
+                    <span>Amazon Music</span>
+                </a>
+                <a href="https://www.imdb.com/name/nm18254015/?ref_=ext_shr_lnk" target="_blank" class="glass-card link-button">
+                    <svg viewBox="0 0 24 24"><path d="M19.5 3h-15A1.5 1.5 0 0 0 3 4.5v15A1.5 1.5 0 0 0 4.5 21h15a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 19.5 3zM6.75 15h-.9V9h.9zm3.51-6l1.14 4.05L12.54 9H13.8v6h-.9v-4.22L11.64 15h-.78l-1.26-4.22V15h-.9V9zm7.14 4.5a1.5 1.5 0 0 1-1.5 1.5h-1.5V9h1.5a1.5 1.5 0 0 1 1.5 1.5v3zm-.9-3a.6.6 0 0 0-.6-.6h-.6v4.2h.6a.6.6 0 0 0 .6-.6z"/></svg>
+                    <span>IMDb Profile</span>
+                </a>
+                <a href="https://www.instagram.com/0shan_music?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="glass-card link-button">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                    <span>Instagram</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            © Oshan Anthony | All Rights Reserved
+        </footer>
+
+    </div>
+
+</body>
+</html>
